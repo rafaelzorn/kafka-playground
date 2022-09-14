@@ -31,4 +31,7 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'external_consult_address' => [
+        'endpoint' => env('EXTERNAL_CONSULT_ADDRESS_ENDPOINT'),
+    ],
 ];
