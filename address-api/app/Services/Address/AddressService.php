@@ -27,7 +27,7 @@ class AddressService implements AddressServiceInterface
     public function getAddressByZipCode(int $zipCode): array
     {
         try {
-            $response = $this->externalConsultAddressService->getFullAddress($zipCode);
+            $response = $this->externalConsultAddressService->getAddressByZipCode($zipCode);
             $data     = new AddressResource($response);
 
             return ['code' => HttpStatusConstant::OK, 'data' => $data];

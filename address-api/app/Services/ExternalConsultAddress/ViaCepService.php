@@ -14,7 +14,7 @@ class ViaCepService implements ExternalConsultAddressServiceInterface
      *
      * @return array
      */
-    public function getFullAddress(int $zipCode): array
+    public function getAddressByZipCode(int $zipCode): array
     {
         $endpoint = config('services.external_consult_address.endpoint');
         $response = Http::get("{$endpoint}{$zipCode}/json/");

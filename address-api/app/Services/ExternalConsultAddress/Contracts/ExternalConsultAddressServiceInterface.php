@@ -9,5 +9,5 @@ interface ExternalConsultAddressServiceInterface
      *
      * @return array
      */
-    public function getFullAddress(int $zipCode): array;
+    public function getAddressByZipCode(int $zipCode): array;
 }
