@@ -3,11 +3,9 @@
 namespace Tests\Integration\app\Http\Controllers\Api\V1\Address\AddressController;
 
 use Tests\TestCase;
-use Exception;
 use Mockery\MockInterface;
 use App\Constants\HttpStatusConstant;
 use App\Services\ExternalConsultAddress\Contracts\ExternalConsultAddressServiceInterface;
-use App\Services\Address\Contracts\AddressServiceInterface;
 use App\Exceptions\ExternalConsultAddress\ExternalConsultAddressException;
 use App\Http\Resources\Address\AddressResource;
 
