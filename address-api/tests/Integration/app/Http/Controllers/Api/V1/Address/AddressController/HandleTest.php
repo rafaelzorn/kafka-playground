@@ -3,7 +3,7 @@
 namespace Tests\Integration\app\Http\Controllers\Api\V1\Address\AddressController;
 
 use Tests\TestCase;
-use Exception;
+use ErrorException;
 use Mockery\MockInterface;
 use App\Constants\HttpStatusConstant;
 use App\Services\ExternalConsultAddress\Contracts\ExternalConsultAddressServiceInterface;
@@ -81,7 +81,7 @@ class HandleTest extends TestCase
         $zipCode = 93425170;
 
         $this->mock(ExternalConsultAddressServiceInterface::class, function (MockInterface $mock) {
-            $mock->shouldReceive('getAddressByZipCode')->andThrow(new Exception);
+            $mock->shouldReceive('getAddressByZipCode')->andThrow(new ErrorException);
         });
 
         // Act
