@@ -3,6 +3,7 @@
 namespace Tests\Integration\app\Http\Controllers\Api\V1\Address\AddressController;
 
 use Tests\TestCase;
+use Exception;
 use Mockery\MockInterface;
 use App\Constants\HttpStatusConstant;
 use App\Services\ExternalConsultAddress\Contracts\ExternalConsultAddressServiceInterface;
@@ -66,6 +67,31 @@ class HandleTest extends TestCase
         $response->assertExactJson([
             'code'    => HttpStatusConstant::NOT_FOUND,
             'message' => trans('messages.address_not_found_by_zip_code'),
+        ]);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function should_return_error(): void
+    {
+        // Arrange
+        $zipCode = 93425170;
+
+        $this->mock(ExternalConsultAddressServiceInterface::class, function (MockInterface $mock) {
+            $mock->shouldReceive('getAddressByZipCode')->andThrow(new Exception);
+        });
+
+        // Act
+        $response = $this->postJson(self::ENDPOINT, ['zip_code' => $zipCode]);
+
+        // Assert
+        $response->assertStatus(HttpStatusConstant::INTERNAL_SERVER_ERROR);
+        $response->assertExactJson([
+            'code'    => HttpStatusConstant::INTERNAL_SERVER_ERROR,
+            'message' => trans('messages.error_searching_full_address_by_zip_code'),
         ]);
     }
 

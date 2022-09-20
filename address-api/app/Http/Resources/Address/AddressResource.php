@@ -11,7 +11,7 @@ class AddressResource extends JsonResource
      *
      * @return array
      */
-    public function toArray($request): array
+    public function toArray(Request $request): array
     {
         return [
             'zip_code'     => $this['cep'],
