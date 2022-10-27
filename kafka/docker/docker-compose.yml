@@ -17,9 +17,17 @@ services:
         volumes:
             - './kafka-persistence:/bitnami/kafka'
         environment:
+            - KAFKA_BROKER_ID=1
             - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-            - KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-            - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
             - ALLOW_PLAINTEXT_LISTENER=yes
         depends_on:
             - zookeeper
+    kafdrop:
+        container_name: kafdrop
+        image: obsidiandynamics/kafdrop:3.30.0
+        ports:
+            - '9000:9000'
+        environment:
+            - KAFKA_BROKERCONNECT=kafka:9092
+        depends_on:
+            - kafka
