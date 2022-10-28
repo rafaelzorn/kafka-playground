@@ -1,2 +1,2 @@
-/docker/kafka-persistence
-/docker/zookeeper-persistence
+/kafka-persistence
+/zookeeper-persistence

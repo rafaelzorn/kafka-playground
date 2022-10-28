@@ -1,27 +1,49 @@
 version: "3.9"
 services:
+    address_api_application:
+        container_name: address_api_application
+        build: ../address-api/docker
+        volumes:
+            - ../address-api:/var/www/html
+        depends_on:
+            - address_api_nginx
+            - kafka
+        links:
+            - address_api_nginx
+
+    address_api_nginx:
+        container_name: address_api_nginx
+        image: nginx:1.21.6
+        ports:
+            - "8000:80"
+        volumes:
+            - ../address-api:/var/www/html
+            - ../address-api/docker/config/nginx/default.conf:/etc/nginx/conf.d/default.conf
+
     zookeeper:
         container_name: zookeeper
         image: 'bitnami/zookeeper:3.8.0'
         ports:
             - '2181:2181'
         volumes:
-            - './zookeeper-persistence:/bitnami/zookeeper'
+            - '../kafka/zookeeper-persistence:/bitnami/zookeeper'
         environment:
             - ALLOW_ANONYMOUS_LOGIN=yes
+
     kafka:
         container_name: kafka
         image: 'bitnami/kafka:3.3.1'
         ports:
             - '9092:9092'
         volumes:
-            - './kafka-persistence:/bitnami/kafka'
+            - '../kafka/kafka-persistence:/bitnami/kafka'
         environment:
             - KAFKA_BROKER_ID=1
             - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
             - ALLOW_PLAINTEXT_LISTENER=yes
         depends_on:
             - zookeeper
+
     kafdrop:
         container_name: kafdrop
         image: obsidiandynamics/kafdrop:3.30.0
