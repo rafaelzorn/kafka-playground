@@ -1,6 +1,6 @@
 version: "3.9"
 services:
-    address_api_application:
+    address_api_php:
         container_name: address_api_application
         build: ../address-api/docker
         volumes:
