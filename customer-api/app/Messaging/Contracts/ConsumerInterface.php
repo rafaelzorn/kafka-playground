@@ -9,5 +9,5 @@ interface ConsumerInterface
      *
      * @return array
      */
-    public function getMessage(string $topic): array;
+    public function getMessages(string $topic): array;
 }

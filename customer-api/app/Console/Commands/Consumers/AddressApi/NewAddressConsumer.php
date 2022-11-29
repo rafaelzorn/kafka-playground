@@ -48,9 +48,18 @@ class NewAddressConsumer extends Command
     public function handle()
     {
         try {
-            $address = $this->consumer->getMessage(TopicConstant::NEW_ADDRESS);
+            $newAddresses = $this->consumer->getMessages(TopicConstant::NEW_ADDRESS);
 
-            // TODO
+            foreach ($newAddresses as $newAddress) {
+                $zipCode = intval(preg_replace('/\D/', '', $newAddress['zip_code']));
+
+                unset($newAddress['zip_code']);
+
+                $this->addressRepository->updateOrCreate(
+                    ['zip_code' => $zipCode],
+                    $newAddress
+                );
+            }
 
             return Command::SUCCESS;
         } catch (Exception $exception) {

@@ -10,17 +10,19 @@ class Consumer implements ConsumerInterface
 {
     /**
      * @param string $topic
-     *
-     * @return array
      */
-    public function getMessage(string $topic): array
+    public function getMessages(string $topic): array
     {
+        $messages = [];
         $consumer = Kafka::createConsumer([$topic])
-                        ->withHandler(function(KafkaConsumerMessage $kafkaConsumerMessage) {
-
+                        ->stopAfterLastMessage()
+                        ->withHandler(function(KafkaConsumerMessage $kafkaConsumerMessage) use (&$messages) {
+                            $messages[] = json_decode($kafkaConsumerMessage->getBody(), true);
                         })
                         ->build();
 
         $consumer->consume();
+
+        return $messages;
     }
 }
