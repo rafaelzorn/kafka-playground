@@ -13,12 +13,12 @@ class Address extends BaseModel
      */
     protected $fillable = [
         'id',
-        'cep',
+        'zip_code',
         'street',
         'complement',
         'neighborhood',
         'city',
-        'uf',
+        'state',
     ];
 
      /**
@@ -38,12 +38,12 @@ class Address extends BaseModel
      * @var array
      */
     protected $casts = [
-        'cep'          => 'integer',
+        'zip_code'     => 'integer',
         'street'       => 'string',
         'complement'   => 'string',
         'neighborhood' => 'string',
         'city'         => 'string',
-        'uf'           => 'string',
+        'state'        => 'string',
         'created_at'   => 'datetime:Y-m-d H:i:s',
         'updated_at'   => 'datetime:Y-m-d H:i:s',
         'deleted_at'   => 'datetime:Y-m-d H:i:s',

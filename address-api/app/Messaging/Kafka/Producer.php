@@ -24,7 +24,7 @@ class Producer implements ProducerInterface
      */
     public function sendMessage(string $topic, mixed $message): void
     {
-        $context = $this->rdKafkaConnection ->createContext();
+        $context = $this->rdKafkaConnection->createContext();
 
         $message = $context->createMessage($message);
         $topic   = $context->createQueue($topic);

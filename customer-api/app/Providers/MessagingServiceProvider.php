@@ -4,8 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Enqueue\RdKafka\RdKafkaConnectionFactory;
-use App\Messaging\Contracts\ProducerInterface;
-use App\Messaging\Kafka\Producer;
+use App\Messaging\Contracts\ConsumerInterface;
+use App\Messaging\Kafka\Consumer;
 
 class MessagingServiceProvider extends ServiceProvider
 {
@@ -23,10 +23,13 @@ class MessagingServiceProvider extends ServiceProvider
                     'metadata.broker.list' => config('messaging.metadata_broker_list'),
                     'enable.auto.commit'   => 'false',
                 ],
+                'topic' => [
+                    'auto.offset.reset' => 'beginning',
+                ],
             ]);
         });
 
-        $this->app->bind(ProducerInterface::class, Producer::class);
+        $this->app->bind(ConsumerInterface::class, Consumer::class);
     }
 
     /**
