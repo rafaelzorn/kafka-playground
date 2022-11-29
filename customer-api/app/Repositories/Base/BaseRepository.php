@@ -25,4 +25,12 @@ abstract class BaseRepository
     {
         return $this->model->updateOrCreate($attributes, $values);
     }
+
+    /**
+     * @return int
+     */
+    public function count(): int
+    {
+        return $this->model->count();
+    }
 }

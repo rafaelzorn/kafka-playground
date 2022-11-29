@@ -4,6 +4,7 @@ namespace Tests\Unit\app\Repositories\Address;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Arr;
 use Tests\Helpers\AddressHelper;
 use App\Repositories\Address\Contracts\AddressRepositoryInterface;
 use App\Models\Address;
@@ -40,6 +41,32 @@ class AddressRepositoryTest extends TestCase
         // Act
         $address = $this->addressRepository->updateOrCreate(['zip_code' => $data['zip_code']], $data);
 
-        dd($address);
+        // Assert
+        $address = Arr::except($address->toArray(), ['id']);
+
+        $this->assertEquals($this->addressRepository->count(), 1);
+        $this->assertEquals($data, $address);
+    }
+
+    /**
+     * @test
+     *
+     * @return void
+     */
+    public function should_update_a_address(): void
+    {
+        // Arrange
+        $dataToUpdate = AddressHelper::addressFaker(93115440);
+        $data         = Address::factory()->zipCode(93115440)->create();
+
+        // Act
+        $address = $this->addressRepository
+                    ->updateOrCreate(['zip_code' => $dataToUpdate['zip_code']], $dataToUpdate);
+
+        // Assert
+        $address = Arr::except($address->toArray(), ['id']);
+
+        $this->assertEquals($this->addressRepository->count(), 1);
+        $this->assertEquals($dataToUpdate, $address);
     }
 }
