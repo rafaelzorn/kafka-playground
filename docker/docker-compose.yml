@@ -25,6 +25,8 @@ services:
         build: ../customer-api/docker
         volumes:
             - ../customer-api:/var/www/html
+        environment:
+            DB_HOST: customer_api_mysql
         depends_on:
             - customer_api_nginx
             - customer_api_mysql
