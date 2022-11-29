@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\BaseModel;
+use Database\Factories\AddressFactory;
 
 class Address extends BaseModel
 {
@@ -48,4 +50,14 @@ class Address extends BaseModel
         'updated_at'   => 'datetime:Y-m-d H:i:s',
         'deleted_at'   => 'datetime:Y-m-d H:i:s',
     ];
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return Factory
+     */
+    protected static function newFactory(): Factory
+    {
+        return AddressFactory::new();
+    }
 }

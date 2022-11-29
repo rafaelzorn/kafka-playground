@@ -8,9 +8,6 @@
         <testsuite name="Unit">
             <directory suffix="Test.php">./tests/Unit</directory>
         </testsuite>
-        <testsuite name="Feature">
-            <directory suffix="Test.php">./tests/Feature</directory>
-        </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">
         <include>
@@ -27,5 +24,8 @@
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="TELESCOPE_ENABLED" value="false"/>
+
+        <server name="DB_CONNECTION" value="mysql"/>
+        <server name="DB_DATABASE" value="customer_api_test"/>
     </php>
 </phpunit>

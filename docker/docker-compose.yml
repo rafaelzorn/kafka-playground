@@ -25,6 +25,7 @@ services:
         build: ../customer-api/docker
         volumes:
             - ../customer-api:/var/www/html
+            - ../customer-api/docker/config/supervisor/address-api-new-address.conf:/etc/supervisor/conf.d/address-api-new-address.conf
         environment:
             DB_HOST: customer_api_mysql
         depends_on:

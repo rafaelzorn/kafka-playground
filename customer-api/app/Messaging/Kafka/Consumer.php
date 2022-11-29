@@ -2,21 +2,12 @@
 
 namespace App\Messaging\Kafka;
 
-use Enqueue\RdKafka\RdKafkaConnectionFactory;
+use Junges\Kafka\Facades\Kafka;
+use Junges\Kafka\Contracts\KafkaConsumerMessage;
 use App\Messaging\Contracts\ConsumerInterface;
-use App\Exceptions\Consumer\ConsumerException;
 
 class Consumer implements ConsumerInterface
 {
-    /**
-     * @param RdKafkaConnectionFactory $rdKafkaConnection
-     *
-     */
-    public function __construct(private RdKafkaConnectionFactory $rdKafkaConnection)
-    {
-        $this->rdKafkaConnection = $rdKafkaConnection;
-    }
-
     /**
      * @param string $topic
      *
@@ -24,19 +15,12 @@ class Consumer implements ConsumerInterface
      */
     public function getMessage(string $topic): array
     {
-        $context  = $this->rdKafkaConnection->createContext();
-        $queue    = $context->createQueue($topic);
-        $consumer = $context->createConsumer($queue);
-        $message  = $consumer->receive();
+        $consumer = Kafka::createConsumer([$topic])
+                        ->withHandler(function(KafkaConsumerMessage $kafkaConsumerMessage) {
 
-        if ($message->getKafkaMessage()->err !== 0) {
-            throw new ConsumerException(
-                trans('messages.error_consuming_kafka_message')
-            );
-        }
+                        })
+                        ->build();
 
-        $consumer->acknowledge($message);
-
-        return json_decode($message->getBody(), true);
+        $consumer->consume();
     }
 }

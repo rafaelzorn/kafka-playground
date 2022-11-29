@@ -49,11 +49,8 @@ class NewAddressConsumer extends Command
     {
         try {
             $address = $this->consumer->getMessage(TopicConstant::NEW_ADDRESS);
-            $zipCode = intval(preg_replace('/\D/', '', $address['zip_code']));
 
-            unset($address['zip_code']);
-
-            $this->addressRepository->updateOrCreate(['zip_code' => $zipCode], $address);
+            // TODO
 
             return Command::SUCCESS;
         } catch (Exception $exception) {

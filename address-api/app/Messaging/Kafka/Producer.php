@@ -2,20 +2,12 @@
 
 namespace App\Messaging\Kafka;
 
-use Enqueue\RdKafka\RdKafkaConnectionFactory;
+use Junges\Kafka\Facades\Kafka;
+use Junges\Kafka\Message\Message;
 use App\Messaging\Contracts\ProducerInterface;
 
 class Producer implements ProducerInterface
 {
-    /**
-     * @param RdKafkaConnectionFactory $rdKafkaConnection
-     *
-     */
-    public function __construct(private RdKafkaConnectionFactory $rdKafkaConnection)
-    {
-        $this->rdKafkaConnection = $rdKafkaConnection;
-    }
-
     /**
      * @param string $topic
      * @param mixed $message
@@ -24,11 +16,8 @@ class Producer implements ProducerInterface
      */
     public function sendMessage(string $topic, mixed $message): void
     {
-        $context = $this->rdKafkaConnection->createContext();
+        $message = new Message(body: $message);
 
-        $message = $context->createMessage($message);
-        $topic   = $context->createQueue($topic);
-
-        $context->createProducer()->send($topic, $message);
+        Kafka::publishOn($topic)->withMessage($message)->send();
     }
 }
