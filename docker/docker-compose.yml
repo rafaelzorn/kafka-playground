@@ -35,6 +35,7 @@ services:
         links:
             - customer_api_nginx
             - customer_api_mysql
+        command: supervisord -n -c /etc/supervisor/supervisord.conf
 
     customer_api_nginx:
         container_name: customer_api_nginx
