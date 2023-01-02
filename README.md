@@ -61,7 +61,7 @@ When running the ``installer.sh`` script it will execute the following commands:
 
 ## Architecture
 
-<img src="./documentation/architecture.png" />
+<img src="./documentation/architecture.jpg" />
 
 ## Technologies Used
 
